@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Local virtual environment
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local coursework artifacts
+/AI_term1_team4.pptx
+/Project_1_description.pdf
+
+# FAA AEDT dataset
+# Kept local until redistribution rights are verified.
+/FAA_AEDT_data.csv
+
+# Local archival material
+/archive/
