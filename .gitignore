@@ -21,5 +21,6 @@ __pycache__/
 # Kept local until redistribution rights are verified.
 /FAA_AEDT_data.csv
 
-# Local archival material
-/archive/
+# Original coursework sources
+/code.py
+/code.ipynb
