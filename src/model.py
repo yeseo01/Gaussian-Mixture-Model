@@ -46,9 +46,9 @@ class GaussianMixture:
         self.reg_covar = reg_covar
         self.random_state = random_state
         self.tol = tol
-        self.phi = None # (K,)
-        self.means = None # (K, d)
-        self.covariance = None # (K, d, d)
+        self.phi = None  # (K,)
+        self.means = None  # (K, d)
+        self.covariance = None  # (K, d, d)
         self.weights = None
         self.responsibility = None
         self.n_features_in_ = None
@@ -239,7 +239,9 @@ class GaussianMixture:
         # Update full covariance matrices using the same responsibilities
         for k in range(self.K):
             diff = (X - self.means[k])  # (N, d) - (d,) => (N, d)
-            self.covariance[k] = ((self.responsibility[:, k][:, None] * diff).T @ diff) / N_k[k]  # weighted covariance, shape (d, d)
+            self.covariance[k] = (
+                (self.responsibility[:, k][:, None] * diff).T @ diff
+            ) / N_k[k]
             self.covariance[k] += self.reg_covar * np.eye(X.shape[1])
 
     # Fit the model with the EM algorithm
@@ -262,11 +264,10 @@ class GaussianMixture:
 
             # Stop when the absolute log-likelihood change falls below tolerance
             if np.abs(log_likelihood - prev_log_likelihood) < self.tol:
-                print(f"Iteration {i+1}")
+                print(f"Iteration {i + 1}")
                 break
 
             prev_log_likelihood = log_likelihood
-
 
     # Assign each sample to the component with the highest responsibility
     def predict(self, x):

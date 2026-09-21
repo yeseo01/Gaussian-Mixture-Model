@@ -54,7 +54,7 @@ For numerical stability, Gaussian probabilities are evaluated in log space and n
 
 ## Repository Structure
 
-~~~text
+```text
 .
 ├── src/
 │   ├── __init__.py
@@ -65,7 +65,7 @@ For numerical stability, Gaussian probabilities are evaluated in log space and n
 ├── .gitignore
 ├── README.md
 └── requirements.txt
-~~~
+```
 
 - `src/model.py` — from-scratch GMM and EM implementation
 - `src/main.py` — original K=1 through K=5 clustering experiment and visualization
@@ -75,19 +75,19 @@ For numerical stability, Gaussian probabilities are evaluated in log space and n
 
 Tested with Python 3.13.3.
 
-~~~bash
+```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-~~~
+```
 
 ## Running the Tests
 
 The test suite does not require the coursework dataset.
 
-~~~bash
+```bash
 python -m unittest discover -s tests -p 'test_*.py' -v
-~~~
+```
 
 The regression tests cover:
 
@@ -106,21 +106,21 @@ The original FAA AEDT CSV is not included in this repository.
 
 To reproduce the experiment, place the dataset at:
 
-~~~text
+```text
 FAA_AEDT_data.csv
-~~~
+```
 
 in the project root. The expected columns are:
 
-~~~text
+```text
 x1,x2
-~~~
+```
 
 Then run:
 
-~~~bash
+```bash
 python -m src.main
-~~~
+```
 
 This fits models with 1 through 5 components and displays the resulting clustering plots together with their BIC values.
 
