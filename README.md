@@ -4,7 +4,49 @@ A from-scratch implementation of a Gaussian Mixture Model (GMM) trained with the
 
 This project originated as a university team assignment using a two-dimensional FAA AEDT dataset. The core GMM and EM algorithm were implemented without using a machine-learning library for model fitting.
 
-## Project Overview
+
+## Key Highlights
+
+- Implemented a Gaussian Mixture Model and the Expectation-Maximization algorithm from scratch without using a machine-learning library for model fitting.
+- Implemented E-step responsibilities, M-step parameter updates, full covariance matrices, log-likelihood evaluation, and BIC calculation.
+- Added numerically stable log-space probability evaluation with log-sum-exp normalization and covariance regularization.
+- Used deterministic initialization and explicit convergence controls to make the iterative optimization reproducible and bounded.
+
+
+## Reproduced Results
+
+The original coursework experiment evaluated 1 through 5 Gaussian components on 1,000 two-dimensional samples.
+
+| Components | Iterations | BIC |
+| ---: | ---: | ---: |
+| 1 | 2 | 10813.20 |
+| 2 | 20 | 10389.95 |
+| 3 | 27 | **10028.97** |
+| 4 | 21 | 10066.04 |
+| 5 | 36 | 10105.23 |
+
+Among the evaluated configurations, the 3-component model produced the lowest BIC.
+
+The current implementation uses a fixed default random seed (`random_state=42`) so this experiment is reproducible.
+
+
+## Project Context & My Role
+
+This project originated as a university team assignment.
+
+My primary contribution to the original team project was implementing the Gaussian Mixture Model and EM algorithm from scratch.
+
+I also proposed using both:
+
+- a maximum iteration limit; and
+- a log-likelihood convergence threshold
+
+to provide a bounded and practical stopping criterion for EM.
+
+During analysis of the iterative optimization process, I examined how the log-likelihood evolved across iterations. Additional robustness and reproducibility checks were added later while preparing the implementation as a standalone software project.
+
+
+## Methodology
 
 The model estimates a mixture of multivariate Gaussian distributions by iteratively applying:
 
@@ -19,23 +61,7 @@ The model estimates a mixture of multivariate Gaussian distributions by iterativ
 
 The implementation also computes the Bayesian Information Criterion (BIC) for model selection.
 
-## Coursework Experiment
-
-The original experiment evaluated models with 1 through 5 Gaussian components on a dataset with 1,000 samples and two features.
-
-| Components | Iterations | BIC |
-| ---: | ---: | ---: |
-| 1 | 2 | 10813.20 |
-| 2 | 20 | 10389.95 |
-| 3 | 27 | **10028.97** |
-| 4 | 21 | 10066.04 |
-| 5 | 36 | 10105.23 |
-
-Among the evaluated models, the 3-component model produced the lowest BIC.
-
-The implementation uses a fixed default random seed (`random_state=42`) so the original experiment is reproducible.
-
-## Implementation Details
+### Implementation Details
 
 `GaussianMixture` supports:
 
@@ -51,6 +77,7 @@ The implementation uses a fixed default random seed (`random_state=42`) so the o
 - cluster prediction after fitting
 
 For numerical stability, Gaussian probabilities are evaluated in log space and normalized using a log-sum-exp calculation. Covariance regularization is also applied to reduce failures on degenerate or nearly singular data.
+
 
 ## Repository Structure
 
@@ -71,6 +98,7 @@ For numerical stability, Gaussian probabilities are evaluated in log space and n
 - `src/main.py` — original K=1 through K=5 clustering experiment and visualization
 - `tests/test_model.py` — self-contained regression tests
 
+
 ## Installation
 
 Tested with Python 3.13.3.
@@ -80,6 +108,7 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
 
 ## Running the Tests
 
@@ -99,6 +128,7 @@ The regression tests cover:
 - stable inference for extremely distant samples
 - full-covariance BIC parameter counting
 - inference-before-fit validation
+
 
 ## Reproducing the Coursework Experiment
 
@@ -124,24 +154,13 @@ python -m src.main
 
 This fits models with 1 through 5 components and displays the resulting clustering plots together with their BIC values.
 
-## Project Contribution
-
-My primary contribution to the original team project was implementing the Gaussian Mixture Model and EM algorithm from scratch.
-
-I also proposed using both:
-
-- a maximum iteration limit, and
-- a log-likelihood convergence threshold
-
-to provide a bounded and practical stopping criterion for EM.
-
-During analysis of the iterative optimization process, I examined how the log-likelihood evolved across iterations. Additional robustness and reproducibility checks were later added while preparing the implementation as a standalone software project.
 
 ## Notes on EM Optimization
 
 For the default 3-component experiment, the observed log-likelihood increased monotonically during training, including a slower-improvement region followed by larger gains later in the optimization.
 
 Separate initialization experiments also showed that EM can converge to different local optima depending on the initial component means. This is an expected property of EM and is one reason initialization can materially affect GMM solutions.
+
 
 ## Limitations
 
